@@ -7,6 +7,8 @@
 
 ## SECTION 0 — CONSTANTS (reference everywhere)
 
+**Repo Status:** `[x]` Implemented in codebase (`src/lib/constants/site.ts`, `globals.css`, `.env.example`, root metadata)
+
 ### Hosting ($0/mo)
 ```
 Frontend + API Routes → Vercel (free: 100GB bandwidth, unlimited deploys)
@@ -92,6 +94,8 @@ NEXT_PUBLIC_GEOFENCE_LNG=77.4538                   # same → copy lng
 ---
 
 ## SECTION 1 — INITIAL SETUP
+
+**Repo Status:** `[x]` Completed in repo
 
 ### 1.1 Create Project
 ```bash
@@ -416,11 +420,11 @@ CREATE OR REPLACE TRIGGER on_auth_user_created
 ```
 
 ### 1.10 GitHub + Vercel Setup
-- [ ] Create GitHub repo `rdec-portal`
-- [ ] `git init && git remote add origin [url] && git push -u origin main`
-- [ ] Connect repo to Vercel (vercel.com → Import Project)
-- [ ] Add all `.env.local` vars in Vercel → Settings → Environment Variables (for Production + Preview)
-- [ ] Enable preview deployments on pull requests
+- [!] Create GitHub repo `rdec-portal`
+- [!] `git init && git remote add origin [url] && git push -u origin main`
+- [!] Connect repo to Vercel (vercel.com → Import Project)
+- [!] Add all `.env.local` vars in Vercel → Settings → Environment Variables (for Production + Preview)
+- [!] Enable preview deployments on pull requests
 
 ---
 
