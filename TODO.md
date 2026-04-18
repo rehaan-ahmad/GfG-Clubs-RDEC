@@ -568,6 +568,8 @@ export const isSuperAdmin = (role: UserRole) => role === 'super-admin'
 ## SECTION 4 — UTILITY FUNCTIONS
 *All in `src/lib/`*
 
+**Repo Status:** `[x]` Implemented in `src/lib/` and `src/hooks/`
+
 ### 4.1 utils.ts
 ```ts
 // src/lib/utils.ts
