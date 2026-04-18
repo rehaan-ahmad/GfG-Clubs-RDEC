@@ -8,6 +8,8 @@
 
 # testing
 /coverage
+MANUAL_SETUP.md
+TODO.md
 
 # next.js
 /.next/
