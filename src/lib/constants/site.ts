@@ -7,8 +7,7 @@ export const RDEC_HOSTING_STACK = {
 
 export const RDEC_SUPABASE_PROJECT = {
   name: 'clubs-portal',
-  id: 'bouhbfufhdeeuukfoxqu',
-  url: 'https://bouhbfufhdeeuukfoxqu.supabase.co',
+  url: process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'https://your-project.supabase.co',
 } as const
 
 export const RDEC_CLUBS = [
