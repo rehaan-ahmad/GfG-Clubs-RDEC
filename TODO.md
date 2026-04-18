@@ -428,10 +428,10 @@ CREATE OR REPLACE TRIGGER on_auth_user_created
 
 ---
 
-## SECTION 2 — DATABASE (already applied)
+## SECTION 2 — DATABASE
 
-> `schema.sql` was executed. All tables, RLS policies and seed data are live.
-> This section is for reference only — do not re-run unless resetting.
+**Repo Status:** `[x]` SQL files prepared in repo (`supabase/schema.sql`, `supabase/profile_trigger.sql`)
+**Manual Status:** `[!]` Apply SQL in Supabase from `MANUAL_SETUP.md`
 
 ### Tables Created
 ```
