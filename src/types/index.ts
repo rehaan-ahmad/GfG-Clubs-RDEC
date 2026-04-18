@@ -157,3 +157,14 @@ export interface AuditLog {
   metadata?: Record<string, unknown>;
   created_at: string;
 }
+
+// Type aliases
+export type UserRole = 'student' | 'club-admin' | 'faculty' | 'super-admin';
+export type ClubStatus = 'established' | 'coming-soon';
+export type EventStatus = 'upcoming' | 'ongoing' | 'completed' | 'cancelled';
+export type AppStatus = 'pending' | 'approved' | 'rejected';
+export type SponsorTier = 'platinum' | 'gold' | 'silver' | 'bronze' | 'partner';
+
+// Utility: role check helpers
+export const isAdmin = (role: UserRole) => role !== 'student';
+export const isSuperAdmin = (role: UserRole) => role === 'super-admin';

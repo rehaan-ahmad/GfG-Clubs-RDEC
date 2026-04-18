@@ -1,6 +1,7 @@
 import PageHeader from '@/components/shared/PageHeader';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import GlassCard from '@/components/shared/GlassCard';
+import Image from 'next/image';
 import { getMerch } from '@/lib/data';
 
 export default async function MerchPage() {
@@ -34,12 +35,14 @@ export default async function MerchPage() {
                     {item.available ? 'Available' : 'Sold Out'}
                   </span>
 
-                  <div className="w-full aspect-square bg-bg-alt rounded-xl mb-6 flex items-center justify-center overflow-hidden">
+                  <div className="relative w-full aspect-square bg-bg-alt rounded-xl mb-6 flex items-center justify-center overflow-hidden">
                     {item.image_url ? (
-                      <img
+                      <Image
                         src={item.image_url}
                         alt={item.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : (
                       <span className="text-6xl opacity-30">👕</span>

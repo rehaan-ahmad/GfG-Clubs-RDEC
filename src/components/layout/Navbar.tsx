@@ -2,10 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 
+const NAV_LINKS = [
+  { href: '/clubs', label: 'Clubs' },
+  { href: '/events', label: 'Events' },
+  { href: '/deals', label: 'Deals' },
+  { href: '/merch', label: 'Merch' },
+  { href: '/sponsors', label: 'Sponsors' },
+  { href: '/community', label: 'Community' },
+  { href: '/about', label: 'About' },
+];
+
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -20,6 +32,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
     <nav
       className={cn(
@@ -28,24 +45,40 @@ export default function Navbar() {
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link href="/" className="font-heading text-2xl font-bold text-accent">
-          RDEC Portal
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center transition-transform group-hover:scale-105">
+            <span className="font-heading text-sm font-bold text-accent">RD</span>
+          </div>
+          <div className="hidden sm:block">
+            <div className="font-heading text-lg font-bold text-text leading-none">RDEC</div>
+            <div className="text-[0.6rem] uppercase tracking-[0.12em] text-text-muted font-body">Student Bodies</div>
+          </div>
         </Link>
-        <div className="hidden md:flex gap-8 items-center font-body text-text font-medium">
-          <Link href="/clubs" className="hover:text-accent transition-colors">
-            Clubs
-          </Link>
-          <Link href="/events" className="hover:text-accent transition-colors">
-            Events
-          </Link>
-          <Link href="/deals" className="hover:text-accent transition-colors">
-            Deals
-          </Link>
-          <Link href="/merch" className="hover:text-accent transition-colors">
-            Merch
-          </Link>
+
+        {/* Desktop Nav Links */}
+        <div className="hidden lg:flex gap-1 items-center font-body">
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(link.href + '/');
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                  isActive
+                    ? 'text-accent bg-accent/10'
+                    : 'text-text-muted hover:text-text hover:bg-text/5'
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
-        <div className="hidden md:flex gap-4 items-center">
+
+        {/* Desktop Actions */}
+        <div className="hidden lg:flex gap-3 items-center">
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -73,20 +106,21 @@ export default function Navbar() {
           )}
           <Link
             href="/login"
-            className="font-button text-lg px-5 py-2 rounded-lg border border-accent text-accent hover:bg-accent hover:text-white transition-all"
+            className="font-button text-base px-4 py-2 rounded-lg border border-accent text-accent hover:bg-accent hover:text-white transition-all"
           >
             Login
           </Link>
           <Link
             href="/student-id"
-            className="font-button text-lg px-5 py-2 rounded-lg bg-accent text-white hover:bg-opacity-90 transition-all shadow-md"
+            className="font-button text-base px-4 py-2 rounded-lg bg-accent text-white hover:bg-opacity-90 transition-all shadow-md"
           >
             Get ID
           </Link>
         </div>
 
+        {/* Mobile Hamburger */}
         <button
-          className="md:hidden text-accent focus:outline-none"
+          className="lg:hidden text-accent focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle Menu"
         >
@@ -96,36 +130,38 @@ export default function Navbar() {
             </svg>
           ) : (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="4" y1="12" x2="20" y2="12"></line>
-              <line x1="4" y1="6" x2="20" y2="6"></line>
-              <line x1="4" y1="18" x2="20" y2="18"></line>
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="4" y1="18" x2="20" y2="18" />
             </svg>
           )}
         </button>
       </div>
 
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-4 pt-4 border-t border-white/10 flex flex-col gap-4 font-body animate-in fade-in slide-in-from-top-2">
-          <Link href="/clubs" className="text-text hover:text-accent p-2" onClick={() => setMobileMenuOpen(false)}>
-            Clubs
-          </Link>
-          <Link href="/events" className="text-text hover:text-accent p-2" onClick={() => setMobileMenuOpen(false)}>
-            Events
-          </Link>
-          <Link href="/deals" className="text-text hover:text-accent p-2" onClick={() => setMobileMenuOpen(false)}>
-            Deals
-          </Link>
-          <Link href="/merch" className="text-text hover:text-accent p-2" onClick={() => setMobileMenuOpen(false)}>
-            Merch
-          </Link>
+        <div className="lg:hidden mt-4 pt-4 border-t border-white/10 flex flex-col gap-1 font-body animate-in fade-in slide-in-from-top-2">
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href || pathname.startsWith(link.href + '/');
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'px-4 py-3 rounded-lg text-sm font-medium transition-all',
+                  isActive ? 'text-accent bg-accent/10' : 'text-text hover:text-accent hover:bg-text/5'
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+
           {mounted && (
-            <div className="flex items-center justify-between p-2">
-              <span className="text-text font-medium">Switch Theme</span>
+            <div className="flex items-center justify-between px-4 py-3">
+              <span className="text-text font-medium text-sm">Switch Theme</span>
               <button
-                onClick={() => {
-                  setTheme(theme === 'dark' ? 'light' : 'dark');
-                  setMobileMenuOpen(false);
-                }}
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className="relative inline-flex h-8 w-14 items-center rounded-full bg-text/10 border border-text/10 transition-colors focus:outline-none focus:ring-2 focus:ring-accent"
                 aria-label="Toggle Dark Mode"
               >
@@ -149,11 +185,12 @@ export default function Navbar() {
               </button>
             </div>
           )}
-          <div className="flex flex-col gap-2 mt-2">
-            <Link href="/login" className="text-center font-button text-lg px-5 py-2 rounded-lg border border-accent text-accent" onClick={() => setMobileMenuOpen(false)}>
+
+          <div className="flex flex-col gap-2 mt-2 px-4">
+            <Link href="/login" className="text-center font-button text-base px-5 py-2.5 rounded-lg border border-accent text-accent">
               Login
             </Link>
-            <Link href="/student-id" className="text-center font-button text-lg px-5 py-2 rounded-lg bg-accent text-white" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/student-id" className="text-center font-button text-base px-5 py-2.5 rounded-lg bg-accent text-white">
               Get ID
             </Link>
           </div>

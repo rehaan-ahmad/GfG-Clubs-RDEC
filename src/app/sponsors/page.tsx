@@ -1,6 +1,7 @@
 import PageHeader from '@/components/shared/PageHeader';
 import AnimatedSection from '@/components/shared/AnimatedSection';
 import GlassCard from '@/components/shared/GlassCard';
+import Image from 'next/image';
 import { getSponsors } from '@/lib/data';
 
 const tierConfig: Record<string, { label: string; size: string; border: string }> = {
@@ -43,12 +44,14 @@ export default async function SponsorsPage() {
                       <GlassCard
                         className={`h-full p-8 flex flex-col items-center text-center group border ${cfg.border}`}
                       >
-                        <div className="w-24 h-24 rounded-full bg-bg-alt flex items-center justify-center mb-6 overflow-hidden">
+                        <div className="relative w-24 h-24 rounded-full bg-bg-alt flex items-center justify-center mb-6 overflow-hidden">
                           {s.logo_url ? (
-                            <img
+                            <Image
                               src={s.logo_url}
                               alt={s.name}
-                              className="w-full h-full object-contain p-4"
+                              fill
+                              className="object-contain p-4"
+                              sizes="96px"
                             />
                           ) : (
                             <span className={`font-heading font-bold text-accent ${cfg.size}`}>
