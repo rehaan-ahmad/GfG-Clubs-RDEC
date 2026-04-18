@@ -475,6 +475,8 @@ audit_log       → auth insert, super-admin read
 ## SECTION 3 — TYPESCRIPT TYPES
 *Create `src/types/index.ts` — import from here everywhere, never redeclare*
 
+**Repo Status:** `[x]` Implemented in `src/types/index.ts`
+
 ```ts
 // src/types/index.ts
 
